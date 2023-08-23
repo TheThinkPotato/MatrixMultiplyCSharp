@@ -3,8 +3,8 @@
 internal class Program
 {
 
-    const int N = 1000;
-    const int RUNS = 3;
+    const int N = 300;
+    const int RUNS = 100;
     const int Seed = 42;
     
 
