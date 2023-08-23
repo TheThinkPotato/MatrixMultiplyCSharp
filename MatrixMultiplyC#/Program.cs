@@ -30,9 +30,13 @@ internal class Program
         stopwatch.Stop();
 
         TimeSpan elapsed = stopwatch.Elapsed;
-        Console.WriteLine($"Elapsed time: {elapsed.TotalSeconds} s.\nWith {RUNS} runs of a {N}x{N} matrix.\n");
+        Console.WriteLine($"Elapsed time: {elapsed.TotalSeconds} s.\nWith {RUNS} runs of a {N}x{N} matrix.");
+        Console.WriteLine("----------------------------------------------");
+        displayArrayLastNums(C,5);
+
 
         //Reset and Clear
+        Console.WriteLine("\n\n");        
         stopwatch.Reset();        
         C = new double[N, N];
 
@@ -47,7 +51,8 @@ internal class Program
         
         elapsed = stopwatch.Elapsed;
         Console.WriteLine($"Parrallel Elapsed time: {elapsed.TotalSeconds} s.\nWith {RUNS} runs of a {N}x{N} matrix.");
-
+        Console.WriteLine("----------------------------------------------");
+        displayArrayLastNums(C, 5);
     }
 
     public static void multiplyParrallelArrays(double[,] A, double[,] B, double[,] result)
@@ -114,5 +119,19 @@ internal class Program
             }
         }
     }
+
+
+    public static void displayArrayLastNums(double[,] arrayDisplay, int lastNums)
+    {
+
+        for (int i = N-1; i < N; i++)
+        {
+            for (int j = N-lastNums; j < N; j++)
+            {
+                Console.WriteLine($"Row:{i}, Col:{j} > {arrayDisplay[i, j]}");
+            }
+        }
+    }
+
 
 }
