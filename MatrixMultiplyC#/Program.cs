@@ -16,13 +16,13 @@ internal class Program
         double[,] B = new double[N, N];
         double[,] C = new double[N, N];
 
-        generateArray(ref A, ref B);
+        generateArray( A,  B);
         stopwatch.Start();
         
         // Matrix multiply by the amount of runs.
         for (int i = 0; i < RUNS; i++)
         {
-            multiplyArrays(ref A, ref B, ref C);            
+            multiplyArrays( A,  B,  C);            
         }
         
         stopwatch.Stop();
@@ -32,7 +32,7 @@ internal class Program
     }
 
 
-    public static void multiplyArrays(ref double[,] A, ref double[,] B, ref double[,] result)
+    public static void multiplyArrays( double[,] A,  double[,] B,  double[,] result)
     {
         for (int i = 0; i < N; i++)
         {
@@ -46,7 +46,7 @@ internal class Program
         }        
     }
 
-    public static void generateArray(ref double[,] A, ref double[,] B)
+    public static void generateArray( double[,] A,  double[,] B)
     {
         Random random = new Random(Seed);
 
@@ -61,7 +61,7 @@ internal class Program
     }
 
 
-    public static void displayArray(ref double[,] arrayDisplay)
+    public static void displayArray( double[,] arrayDisplay)
     {
 
         for (int i = 0; i < N; i++)
