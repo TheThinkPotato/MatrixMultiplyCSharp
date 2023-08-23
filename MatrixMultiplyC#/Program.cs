@@ -1,4 +1,6 @@
 ﻿using System.Diagnostics;
+using System.Threading;
+using System.Threading.Tasks;
 
 internal class Program
 {
@@ -16,37 +18,77 @@ internal class Program
         double[,] B = new double[N, N];
         double[,] C = new double[N, N];
 
-        generateArray(ref A, ref B);
+        generateArray( A,  B);
         stopwatch.Start();
         
         // Matrix multiply by the amount of runs.
         for (int i = 0; i < RUNS; i++)
         {
-            multiplyArrays(ref A, ref B, ref C);            
+            multiplyArrays( A,  B,  C);            
         }
         
         stopwatch.Stop();
 
         TimeSpan elapsed = stopwatch.Elapsed;
-        Console.WriteLine($"Elapsed time: {elapsed.TotalSeconds} s.\nWith {RUNS} runs of a {N}x{N} matrix.");
+        Console.WriteLine($"Elapsed time: {elapsed.TotalSeconds} s.\nWith {RUNS} runs of a {N}x{N} matrix.\n");
+
+        //Reset and Clear
+        stopwatch.Reset();        
+        C = new double[N, N];
+
+
+        stopwatch.Start();
+        // Parrallel Matrix multiply by the amount of runs.
+        for (int i = 0; i < RUNS; i++)
+        {
+            multiplyParrallelArrays(A, B, C);
+        }
+        stopwatch.Stop();
+        
+        elapsed = stopwatch.Elapsed;
+        Console.WriteLine($"Parrallel Elapsed time: {elapsed.TotalSeconds} s.\nWith {RUNS} runs of a {N}x{N} matrix.");
+
     }
 
-
-    public static void multiplyArrays(ref double[,] A, ref double[,] B, ref double[,] result)
+    public static void multiplyParrallelArrays(double[,] A, double[,] B, double[,] result)
     {
-        for (int i = 0; i < N; i++)
+        #region Parallel_Loop
+
+        Parallel.For(0, N, i =>
         {
             for (int j = 0; j < N; j++)
             {
+                double temp = 0;
                 for (int k = 0; k < N; k++)
                 {
-                    result[i, j] += A[i, k] * B[k, j];
+                    temp += A[i, k] * B[k, j];
                 }
+                result[i, j] = temp;
             }
-        }        
+        });
+        #endregion
     }
 
-    public static void generateArray(ref double[,] A, ref double[,] B)
+
+    public static void multiplyArrays( double[,] A,  double[,] B,  double[,] result)
+    {
+
+        for(int i = 0; i < N; i++)
+        {
+            for (int j = 0; j < N; j++)
+            {
+                double temp = 0;
+                for (int k = 0; k < N; k++)
+                {
+                    temp += A[i, k] * B[k, j];
+                }
+                result[i,j] = temp;
+            }
+        }
+
+    }
+
+    public static void generateArray( double[,] A,  double[,] B)
     {
         Random random = new Random(Seed);
 
@@ -61,7 +103,7 @@ internal class Program
     }
 
 
-    public static void displayArray(ref double[,] arrayDisplay)
+    public static void displayArray( double[,] arrayDisplay)
     {
 
         for (int i = 0; i < N; i++)
