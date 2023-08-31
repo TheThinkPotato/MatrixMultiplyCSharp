@@ -19,6 +19,11 @@ internal class Program
         double[,] C = new double[N, N];
 
         generateArray(A, B);
+        
+        
+        //-----------------------------------------------------------------------------------//
+        //      Sequential      
+        //
         stopwatch.Start();
 
         // Matrix multiply by the amount of runs.
@@ -28,18 +33,16 @@ internal class Program
         }
 
         stopwatch.Stop();
-
-        TimeSpan elapsed = stopwatch.Elapsed;
-        Console.WriteLine($"Sequential Elapsed time: {elapsed.TotalSeconds} s.\nWith {RUNS} runs of a {N}x{N} matrix.");
-        Console.WriteLine("----------------------------------------------");
+        
+        displayResults("Sequential Elapsed time", stopwatch.Elapsed.ToString());
         displayArrayLastNums(C, 5);
 
+        //-----------------------------------------------------------------------------------//
+        //      Parallel
 
-        //Reset and Clear
-        Console.WriteLine("\n\n");
+        //Reset and Clear        
         stopwatch.Reset();
         C = new double[N, N];
-
 
         stopwatch.Start();
         // Parrallel Matrix multiply by the amount of runs.
@@ -48,12 +51,13 @@ internal class Program
             multiplyParrallelArrays(A, B, C);
         }
         stopwatch.Stop();
-
-        elapsed = stopwatch.Elapsed;
-        Console.WriteLine($"Parrallel Elapsed time: {elapsed.TotalSeconds} s.\nWith {RUNS} runs of a {N}x{N} matrix.");
-        Console.WriteLine("----------------------------------------------");
+        
+        displayResults("Parallel", stopwatch.Elapsed.ToString());
         displayArrayLastNums(C, 5);
-
+        
+        //-----------------------------------------------------------------------------------//
+        //      Sequential Transposed
+        
         stopwatch.Reset();
         C = new double[N, N];
         generateArrayT(A, B);
@@ -65,15 +69,12 @@ internal class Program
             multiplyArraysTrans(A, B, C);
         }
         stopwatch.Stop();
-
-        elapsed = stopwatch.Elapsed;
-        Console.WriteLine("\n\n");
-        Console.WriteLine($"Sequential Transposed Elapsed time: {elapsed.TotalSeconds} s.\nWith {RUNS} runs of a {N}x{N} matrix.");
-        Console.WriteLine("----------------------------------------------");
+       
+        displayResults("Sequential Transposed Elapsed time", stopwatch.Elapsed.ToString());
         displayArrayLastNums(C, 5);
 
-
-
+        //-----------------------------------------------------------------------------------//
+        //      Parallel Transposed
 
         stopwatch.Reset();
         C = new double[N, N];        
@@ -86,12 +87,15 @@ internal class Program
         }
         stopwatch.Stop();
 
-        elapsed = stopwatch.Elapsed;
-        Console.WriteLine("\n\n");
-        Console.WriteLine($"Parallel Transposed Elapsed time: {elapsed.TotalSeconds} s.\nWith {RUNS} runs of a {N}x{N} matrix.");
-        Console.WriteLine("----------------------------------------------");
+        displayResults("Parallel Transposed Elapsed time", stopwatch.Elapsed.ToString());                
         displayArrayLastNums(C, 5);
+    }
 
+    public static void displayResults(string matrixMulType, string elapsedTime)
+    {
+        Console.WriteLine("\n\n");
+        Console.WriteLine($"{matrixMulType}: {elapsedTime} s.\nWith {RUNS} runs of a {N}x{N} matrix.");
+        Console.WriteLine("----------------------------------------------");
     }
 
     public static void multiplyParrallelArrays(double[,] A, double[,] B, double[,] result)
