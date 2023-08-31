@@ -26,7 +26,7 @@ internal class Program
         //
         stopwatch.Start();
 
-        // Matrix multiply by the amount of runs.
+        // Sequential multiply by the amount of runs.
         for (int i = 0; i < RUNS; i++)
         {
             multiplyArrays(A, B, C);
@@ -34,7 +34,7 @@ internal class Program
 
         stopwatch.Stop();
         
-        displayResults("Sequential Elapsed time", stopwatch.Elapsed.ToString());
+        displayResults("Sequential Elapsed time", stopwatch.Elapsed.TotalSeconds.ToString());
         displayArrayLastNums(C, 5);
 
         //-----------------------------------------------------------------------------------//
@@ -52,7 +52,7 @@ internal class Program
         }
         stopwatch.Stop();
         
-        displayResults("Parallel", stopwatch.Elapsed.ToString());
+        displayResults("Parallel Transposed Elapsed time", stopwatch.Elapsed.TotalSeconds.ToString());
         displayArrayLastNums(C, 5);
         
         //-----------------------------------------------------------------------------------//
@@ -63,14 +63,14 @@ internal class Program
         generateArrayT(A, B);
 
         stopwatch.Start();
-        // Parrallel Matrix multiply by the amount of runs.
+        // Sequential Matrix multiply by the amount of runs.
         for (int i = 0; i < RUNS; i++)
         {
             multiplyArraysTrans(A, B, C);
         }
         stopwatch.Stop();
        
-        displayResults("Sequential Transposed Elapsed time", stopwatch.Elapsed.ToString());
+        displayResults("Sequential Transposed Elapsed time", stopwatch.Elapsed.TotalSeconds.ToString());
         displayArrayLastNums(C, 5);
 
         //-----------------------------------------------------------------------------------//
@@ -87,7 +87,7 @@ internal class Program
         }
         stopwatch.Stop();
 
-        displayResults("Parallel Transposed Elapsed time", stopwatch.Elapsed.ToString());                
+        displayResults("Parallel Transposed Elapsed time", stopwatch.Elapsed.TotalSeconds.ToString());                
         displayArrayLastNums(C, 5);
     }
 
